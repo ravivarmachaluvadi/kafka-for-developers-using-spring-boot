@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 @Slf4j
@@ -76,7 +78,7 @@ public class LibraryEventProducer {
     private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value, String topic) {
 
 
-        List<Header> recordHeaders = List.of(new RecordHeader("event-source", "scanner".getBytes()));
+        List<Header> recordHeaders = Stream.of(new RecordHeader("event-source", "scanner".getBytes())).collect(Collectors.toList());
 
         return new ProducerRecord<>(topic, null, key, value, recordHeaders);
     }
